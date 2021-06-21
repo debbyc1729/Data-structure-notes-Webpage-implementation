@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+   <head>
+     <meta charset="big5">
+     <title>資料結構筆記-陣列</title>
+     <style type="text/css">
+     <!--
+         
+         
+         body{
+             cursor:url(mouse/2.cur),url(mouse/2.png),auto;
+             font-family:Microsoft JhengHei;
+         }
+         /*感覺是個好東西*/
+         #main{
+             margin:0 auto;
+             border:0px #330000 solid;
+             width:75%;
+             height:auto;
+         }
+         .back{
+             background-color: #f4de9b;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 304 304' width='304' height='304'%3E%3Cpath fill='%23ae845c' fill-opacity='0.4' d='M44.1 224a5 5 0 1 1 0 2H0v-2h44.1zm160 48a5 5 0 1 1 0 2H82v-2h122.1zm57.8-46a5 5 0 1 1 0-2H304v2h-42.1zm0 16a5 5 0 1 1 0-2H304v2h-42.1zm6.2-114a5 5 0 1 1 0 2h-86.2a5 5 0 1 1 0-2h86.2zm-256-48a5 5 0 1 1 0 2H0v-2h12.1zm185.8 34a5 5 0 1 1 0-2h86.2a5 5 0 1 1 0 2h-86.2zM258 12.1a5 5 0 1 1-2 0V0h2v12.1zm-64 208a5 5 0 1 1-2 0v-54.2a5 5 0 1 1 2 0v54.2zm48-198.2V80h62v2h-64V21.9a5 5 0 1 1 2 0zm16 16V64h46v2h-48V37.9a5 5 0 1 1 2 0zm-128 96V208h16v12.1a5 5 0 1 1-2 0V210h-16v-76.1a5 5 0 1 1 2 0zm-5.9-21.9a5 5 0 1 1 0 2H114v48H85.9a5 5 0 1 1 0-2H112v-48h12.1zm-6.2 130a5 5 0 1 1 0-2H176v-74.1a5 5 0 1 1 2 0V242h-60.1zm-16-64a5 5 0 1 1 0-2H114v48h10.1a5 5 0 1 1 0 2H112v-48h-10.1zM66 284.1a5 5 0 1 1-2 0V274H50v30h-2v-32h18v12.1zM236.1 176a5 5 0 1 1 0 2H226v94h48v32h-2v-30h-48v-98h12.1zm25.8-30a5 5 0 1 1 0-2H274v44.1a5 5 0 1 1-2 0V146h-10.1zm-64 96a5 5 0 1 1 0-2H208v-80h16v-14h-42.1a5 5 0 1 1 0-2H226v18h-16v80h-12.1zm86.2-210a5 5 0 1 1 0 2H272V0h2v32h10.1zM98 101.9V146H53.9a5 5 0 1 1 0-2H96v-42.1a5 5 0 1 1 2 0zM53.9 34a5 5 0 1 1 0-2H80V0h2v34H53.9zm60.1 3.9V66H82v64H69.9a5 5 0 1 1 0-2H80V64h32V37.9a5 5 0 1 1 2 0zM101.9 82a5 5 0 1 1 0-2H128V37.9a5 5 0 1 1 2 0V82h-28.1zm16-64a5 5 0 1 1 0-2H146v44.1a5 5 0 1 1-2 0V18h-26.1zm102.2 270a5 5 0 1 1 0 2H98v14h-2v-16h124.1zM242 149.9V160h16v34h-16v62h48v48h-2v-46h-48v-66h16v-30h-16v-12.1a5 5 0 1 1 2 0zM53.9 18a5 5 0 1 1 0-2H64V2H48V0h18v18H53.9zm112 32a5 5 0 1 1 0-2H192V0h50v2h-48v48h-28.1zm-48-48a5 5 0 0 1-9.8-2h2.07a3 3 0 1 0 5.66 0H178v34h-18V21.9a5 5 0 1 1 2 0V32h14V2h-58.1zm0 96a5 5 0 1 1 0-2H137l32-32h39V21.9a5 5 0 1 1 2 0V66h-40.17l-32 32H117.9zm28.1 90.1a5 5 0 1 1-2 0v-76.51L175.59 80H224V21.9a5 5 0 1 1 2 0V82h-49.59L146 112.41v75.69zm16 32a5 5 0 1 1-2 0v-99.51L184.59 96H300.1a5 5 0 0 1 3.9-3.9v2.07a3 3 0 0 0 0 5.66v2.07a5 5 0 0 1-3.9-3.9H185.41L162 121.41v98.69zm-144-64a5 5 0 1 1-2 0v-3.51l48-48V48h32V0h2v50H66v55.41l-48 48v2.69zM50 53.9v43.51l-48 48V208h26.1a5 5 0 1 1 0 2H0v-65.41l48-48V53.9a5 5 0 1 1 2 0zm-16 16V89.41l-34 34v-2.82l32-32V69.9a5 5 0 1 1 2 0zM12.1 32a5 5 0 1 1 0 2H9.41L0 43.41V40.6L8.59 32h3.51zm265.8 18a5 5 0 1 1 0-2h18.69l7.41-7.41v2.82L297.41 50H277.9zm-16 160a5 5 0 1 1 0-2H288v-71.41l16-16v2.82l-14 14V210h-28.1zm-208 32a5 5 0 1 1 0-2H64v-22.59L40.59 194H21.9a5 5 0 1 1 0-2H41.41L66 216.59V242H53.9zm150.2 14a5 5 0 1 1 0 2H96v-56.6L56.6 162H37.9a5 5 0 1 1 0-2h19.5L98 200.6V256h106.1zm-150.2 2a5 5 0 1 1 0-2H80v-46.59L48.59 178H21.9a5 5 0 1 1 0-2H49.41L82 208.59V258H53.9zM34 39.8v1.61L9.41 66H0v-2h8.59L32 40.59V0h2v39.8zM2 300.1a5 5 0 0 1 3.9 3.9H3.83A3 3 0 0 0 0 302.17V256h18v48h-2v-46H2v42.1zM34 241v63h-2v-62H0v-2h34v1zM17 18H0v-2h16V0h2v18h-1zm273-2h14v2h-16V0h2v16zm-32 273v15h-2v-14h-14v14h-2v-16h18v1zM0 92.1A5.02 5.02 0 0 1 6 97a5 5 0 0 1-6 4.9v-2.07a3 3 0 1 0 0-5.66V92.1zM80 272h2v32h-2v-32zm37.9 32h-2.07a3 3 0 0 0-5.66 0h-2.07a5 5 0 0 1 9.8 0zM5.9 0A5.02 5.02 0 0 1 0 5.9V3.83A3 3 0 0 0 3.83 0H5.9zm294.2 0h2.07A3 3 0 0 0 304 3.83V5.9a5 5 0 0 1-3.9-5.9zm3.9 300.1v2.07a3 3 0 0 0-1.83 1.83h-2.07a5 5 0 0 1 3.9-3.9zM97 100a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-48 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 96a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-144a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM49 36a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM33 68a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 240a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm80-176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm112 176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 180a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 84a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'%3E%3C/path%3E%3C/svg%3E");
+         }
+         .menu{
+             background-color: #FDC4CB;
+             width:100%;
+             height:3.5%;
+             font-size:35px;
+             
+             padding-top:25px;
+             
+         }
+         .music{
+             width:40px;
+             height:60px;
+             visibility:hidden;
+         }
+         .article{
+             padding:10px;
+             background-color:#FAFBD0;
+             
+             
+         }
+         p{
+             cursor:url(mouse/1.cur),url(mouse/1.png),auto;
+         }
+         
+         .bm{
+             
+             width:94%;
+             height:5%;
+             font-size:35px;
+             padding-top:3%;
+             padding-left:3%;
+             padding-right:3%;
+             
+             
+         }
+         .bookmark{
+             float:left;
+             
+             
+             background-color: #FDE3E6;
+         }
+         .index{
+             float:right;
+             
+             background-color: #FDC4CB;
+         }
+         
+         .page{
+             
+             width:94%;
+             height:5%;
+             font-size:35px;
+             
+             padding:3%;
+         }
+         .lastpage{
+             float:left;
+             margin:10px;
+             width:25%;
+             background-color: #FDE3E6;
+         }
+         .nextpage{
+             float:right;
+             margin:10px;
+             width:25%;
+             background-color: #FDE3E6;
+         }
+         
+         
+         
+         /*下拉式選單*/
+         
+
+         ul.drop-down-menu {
+             display:inline-block;
+         }
+
+         ul.drop-down-menu li {
+             position:relative;
+             
+         }
+
+         ul.drop-down-menu > li:last-child {
+             border-right:none;
+         }
+
+
+
+         ul.drop-down-menu a {
+             background-color:#FDE3E6;
+             color:#333;
+             display:block;
+             padding:10px 16px;
+             text-decoration:none;
+             
+
+         }
+         ul.drop-down-menu a:hover {
+              background-color:#F08080;
+              color:#fff;
+         }
+         
+         ul.drop-down-menu li:hover > a {
+              background-color:#F08080;
+              color:#fff;
+              
+         }
+         ul.drop-down-menu ul {
+              display:none;
+              position:absolute;
+              z-index:999;
+              left:100%;
+              top:10px;
+              min-width:180px;
+         }
+
+         ul.drop-down-menu li:hover > ul {
+              display:block;
+         }
+         /*下拉式選單*/
+         
+         
+         
+         
+         
+         /*以下ok*/
+         ul{
+            list-style-type:none;
+            margin:0;
+            padding:0;
+            width:100%;
+            background-color:#FDE3E6;
+            
+            font-size:15px;
+         }
+         li a{
+             display:block;
+             color:#000;
+             padding:10px 16px;
+             text-decoration:none;
+             
+         }
+         li a:visited{
+             background-color:#FDE3E6;
+             color:#000;
+         }
+         li a:hover{
+             background-color:#F08080;
+             color:white;
+         }
+         li a.active{
+             background-color:#F08080;
+             color:white;
+             cursor:url(mouse/4.cur),url(mouse/4.png),auto;
+             
+         }
+         li a:hover:not(.active){
+             background-color:#F08080;
+             color:white;
+             cursor:url(mouse/4.cur),url(mouse/4.png),auto;
+             
+         }
+         
+         
+         
+         
+         /*回頂層*/
+         ul.f{
+            list-style-type:none;
+            margin:0;
+            padding:0;
+            width:100%;
+            background-color:#F08080;
+         }
+         ul.f li a{
+             display:block;
+             color:#000;
+             padding:10px 16px;
+             text-decoration:none;
+         }
+         ul.f li a:hover{
+             background-color:#555;
+             color:red;
+         }
+         ul.f li a.active{
+             background-color:#4CAF50;
+             color:yellow;
+         }
+         ul.f li a:hover:not(.active){
+             background-color:#F08080;
+             color:white;
+         }
+         /*回頂層*/
+         
+         .header{
+             background-color:#F08080;
+             padding:50px;
+             text-align:center;
+             font-size:50px;
+             
+         }
+         .footer{
+             background-color:#FDC4CB;
+             padding:10px;
+             text-align:center;
+         }
+         .row:after{
+             content:"";
+             display:table;
+             clear:both;
+         }
+         .column{
+             float:left;
+             height:2000px;
+         }
+         .column.side{
+             background-color:#FDE3E6;
+             width:15%;
+             
+             text-align: center;
+         }
+         .column.middle{
+             background-color:#FAFBD0;
+             width:85%;
+             
+         }
+         .fixed {
+             position: fixed;
+             bottom:0;
+             right:0;
+             width:150px;
+             background-color:#FDC4CB;
+         }
+         .image {
+             
+             padding:5px 0;
+             width:20%;
+             float:left;
+             
+         }
+         .word{
+             
+             padding:40px 0;
+             width:80%;
+             text-align:center;
+             font-size:50px;
+             
+         }
+         
+         /*以上ok*/
+      -->
+     </style>  
+   </head>
+   <body class="back">
+   <div id="main">
+   <div class="row">
+       <div class="header">
+           <div class="image">
+             <img src="資料結構.png" height="150" width="200">
+          </div>
+          <div class="word">
+           資料結構筆記
+          </div>
+       </div>
+       <div class="column side">
+           <div class="menu">
+             <center>目錄</center>
+           </div>
+           <ul class="drop-down-menu">
+               <li>
+                   <a href="ch1.html"><center>演算法分析</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch1.html#演算法">
+                               <center>演算法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch1.html#Big-O">
+                               <center>Big-O</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch1.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch2.html"><center>陣列</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch2.html#陣列的表示法">
+                               <center>陣列的表示法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch2.html#上三角形和下三角形表示法">
+                               <center>上三角形和下三角形<br>表示法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch2.html#多項式表示法">
+                               <center>多項式表示法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch2.html#魔術方陣">
+                               <center>魔術方陣</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch2.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch3.html"><center>鏈結串列</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch3.html#單向鏈結串列">
+                               <center>單向鏈結串列</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch3.html#環狀串列">
+                               <center>環狀串列</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch3.html#雙向鏈結串列">
+                               <center>雙向鏈結串列</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch3.html#鏈結串列的應用">
+                               <center>鏈結串列的應用</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch3.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch4.html"><center>堆疊與序列1</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch4.html#堆疊與序列的基本概念">
+                               <center>堆疊與序列的<br>基本概念</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#堆疊的加入與刪除">
+                               <center>堆疊的加入與刪除</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#序列的加入與刪除">
+                               <center>序列的加入與刪除</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#環狀序列">
+                               <center>環狀序列</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#堆疊與序列的應用">
+                               <center>堆疊與序列的應用</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#如何計算後序表示式">
+                               <center>如何計算後序表示式</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch4.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch5.html"><center>遞迴</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch5.html#遞迴的基本範例">
+                               <center>遞迴的基本範例</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch5.html#典型的遞迴範例1">
+                               <center>典型的遞迴範例1:<br>河內塔</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch5.html#典型的遞迴範例2">
+                               <center>典型的遞迴範例2:<br>八個皇后</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch5.html#何時不要使用遞迴">
+                               <center>何時不要使用遞迴?</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch5.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch6.html"><center>樹狀結構</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch6.html#樹狀結構的專有名詞">
+                               <center>樹狀結構的專有名詞</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch6.html#二元樹">
+                               <center>二元樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch6.html#二元樹的表示法">
+                               <center>二元樹的表示法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch6.html#二元樹的追蹤">
+                               <center>二元樹的追蹤</center>
+                           </a>
+                       </li>
+                       
+                       <li>
+                           <a href="ch6.html#引線二元樹">
+                               <center>引線二元樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch6.html#其他議題">
+                               <center>其他議題</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch6.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch7.html"><center>二元搜尋樹</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch7.html#何謂二元搜尋樹">
+                               <center>何謂二元搜尋樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch7.html#二元搜尋樹的加入">
+                               <center>二元搜尋樹的加入</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch7.html#二元搜尋樹的刪除">
+                               <center>二元搜尋樹的刪除</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch7.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch8.html"><center>堆積</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch8.html#何謂堆積">
+                               <center>何謂堆積</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch8.html#何謂min-heap">
+                               <center>何謂min-heap</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch8.html#min-max heap">
+                               <center>min-max heap</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch8.html#deap">
+                               <center>deap</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch8.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch9.html"><center>高度平衡<br>二元搜尋樹</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch9.html#何謂高度平衡二元搜尋樹">
+                               <center>何謂<br>高度平衡二元搜尋樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch9.html#AVL-tree的加入">
+                               <center>AVL-tree的加入</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch9.html#AVL-tree的刪除">
+                               <center>AVL-tree的刪除</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch9.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch10.html"><center>2-3tree與<br>2-4tree</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch10.html#2-3tree">
+                               <center>2-3tree</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch10.html#2-3-4tree">
+                               <center>2-3-4tree</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch10.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch11.html"><center>B-tree</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch11.html#m-way搜尋樹">
+                               <center>m-way搜尋樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch11.html#B-tree">
+                               <center>B-tree</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch11.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch12.html"><center>圖形結構</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch12.html#圖形的一些專有名詞">
+                               <center>圖形的一些專有名詞</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#圖形資料結構表示法">
+                               <center>圖形資料結構表示法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#圖形追蹤">
+                               <center>圖形追蹤</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#擴展樹">
+                               <center>擴展樹</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#最短路徑">
+                               <center>最短路徑</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#拓樸順序">
+                               <center>拓樸順序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#臨界路徑法">
+                               <center>臨界路徑法</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch12.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch13.html"><center>排序</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch13.html#氣泡排序">
+                               <center>氣泡排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#選擇排序">
+                               <center>選擇排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#插入排序">
+                               <center>插入排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#合併排序">
+                               <center>合併排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#快速排序">
+                               <center>快速排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#堆積排序">
+                               <center>堆積排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#二元樹排序">
+                               <center>二元樹排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#謝耳排序">
+                               <center>謝耳排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#基數排序">
+                               <center>基數排序</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch13.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="ch14.html"><center>搜尋</center></a>
+                   <ul>
+                       <li>
+                           <a href="ch14.html#循序搜尋">
+                               <center>循序搜尋</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch14.html#二元搜尋">
+                               <center>二元搜尋</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch14.html#雜湊">
+                               <center>雜湊</center>
+                           </a>
+                       </li>
+                       <li>
+                           <a href="ch14.html#動動腦時間">
+                               <center>動動腦時間</center>
+                           </a>
+                       </li>
+                    </ul>
+               </li>
+           </ul>
+       </div>
+       <div class="column middle">
+           <div class="menu">
+           <center>陣列</center>
+           </div>
+           <div class="bm">
+                 <ul>
+                     <li class="bookmark">
+                         <a href="#陣列的表示法">
+                               <center>陣列的表示法</center>
+                         </a>
+                     </li>
+                     <li class="bookmark">
+                         <a href="#上三角形和下三角形表示法">
+                               <center>上三角形和下三角形表示法</center>
+                          </a>
+                     </li>
+                     <li class="bookmark">
+                          <a href="#多項式表示法">
+                               <center>多項式表示法</center>
+                          </a>
+                      </li>
+                      <li class="bookmark">
+                          <a href="#魔術方陣">
+                               <center>魔術方陣</center>
+                          </a>
+                      </li>
+                     <li class="bookmark">
+                          <a href="#動動腦時間">
+                               <center>動動腦時間</center>
+                          </a>
+                      </li>
+                      <li class="index">
+                          <a href="index.html">
+                              <center>回首頁</center>
+                          </a>
+                      </li>
+                </ul>
+              </div>
+           <div class="article">
+             <a name="陣列的表示法"><h2><p>陣列的表示法</p></h2></a>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             
+              <a name="上三角形和下三角形表示法"><h2><p>上三角形和下三角形表示法</p></h2></a>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             
+             <a name="多項式表示法"><h2><p>多項式表示法</p></h2></a>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             
+             <a name="魔術方陣"><h2><p>魔術方陣</p></h2></a>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             
+             <a name="動動腦時間"><h2><p>動動腦時間</p></h2></a>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             <br>
+             
+           </div>
+           <div class="page">
+                 <ul>
+                     <li class="lastpage">
+                         <a href="ch1.html">
+                               <center>上一章</center>
+                         </a>
+                     
+                      <li class="nextpage">
+                          <a href="ch3.html">
+                              <center>下一章</center>
+                          </a>
+                      </li>
+                </ul>
+              </div>
+           
+           
+       </div>
+       
+       
+   </div>
+   <div class="fixed">
+       <ul class="f">
+           <li><a href="ch1.html"><center>回頂層</center></a></li>
+           
+       </ul>
+       <center><iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2F210.240.163.22%2F10711241%2F&width=114&layout=button_count&action=like&size=large&show_faces=true&share=true&height=46&appId" width="114" height="46" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media">
+       </iframe></center>
+       
+   </div>
+   <div class="footer">
+       <p>如果有看到錯誤，歡迎聯繫我們!->>  
+       E-mail : aa11bb223v@yahoo.com.tw</p>
+       <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2F210.240.163.22%2F10711241%2F&width=114&layout=button_count&action=like&size=large&show_faces=true&share=true&height=46&appId" width="114" height="46" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media">
+       </iframe>
+       <audio src="aLIEz.mp3" autoplay loop></audio>  
+   </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   </div>
+   </body>
+</html>
